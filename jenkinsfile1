@@ -3,7 +3,7 @@ pipeline {
     stages { 
         stage ("SCM Checkin-1") {
             steps {
-              git branch: 'master', url: 'https://github.com/Vishwanathms/SampleMaven'
+              git branch: 'master', url: 'https://github.com/dineshkesa/mavensample'
             }
         }
         stage ("maven build") {
@@ -14,20 +14,28 @@ pipeline {
             steps {
                 sh "mvn package"
             }
+input {
+                 message 'Mvn Package is Successfull, I can Proceed'
+            }
         }
+
+
 stage ("Build the Docker Image") {
             steps {
-                sh "docker build . -t vishwacloudlab/tomcat-1"
+                sh "docker build . -t dineshkumarkesa/tomcat-1"
             }
         }
 stage ("Run the Container") {
             steps {
-                sh "docker run -d -p 90:8080 --name cont01 vishwacloudlab/tomcat-1"
+                sh "docker run -d -p 90:8080 --name cont01 dineshkumarkesa/tomcat-1"
             }
         }
 stage ("Push to Docker HUB") {
             steps {
-                sh "docker push vishwacloudlab/tomcat-1:latest"
+				withDockerRegistry(credentialsId: 'DockerHub', url: '') {
+				// some block
+				sh "docker push dineshkumarkesa/tomcat-1:latest"
+				}
             }
         }
 }
