@@ -8,8 +8,8 @@ pipeline {
         }
         stage ("maven build") {
             tools {
-                maven 'maven-3.6.2'
-                jdk 'JDK1.8'
+                maven 'maven-latest'
+                jdk 'jdk11'
             }
             steps {
                 sh "mvn package"
