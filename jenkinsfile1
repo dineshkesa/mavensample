@@ -19,6 +19,14 @@ input {
             }
         }
 
+stage ('delete the existing image')
+    {
+        steps {
+            sh 'sudo docker container rm cont01 -f | true'
+            sh 'sudo docker image rmi tomcat-1:latest | true'
+        }
+            
+        }
 
 stage ("Build the Docker Image") {
             steps {
